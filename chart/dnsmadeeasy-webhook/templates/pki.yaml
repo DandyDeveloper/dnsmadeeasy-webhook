@@ -8,7 +8,7 @@ metadata:
   name: {{ include "dnsmadeeasy-webhook.selfSignedIssuer" . }}
   namespace: {{ .Release.Namespace | quote }}
   labels:
-    {{- include "common.labels" . | nindent 4 }}
+    {{- include "dnsmadeeasy.labels" . | nindent 4 }}
 spec:
   selfSigned: {}
 
@@ -21,7 +21,7 @@ metadata:
   name: {{ include "dnsmadeeasy-webhook.rootCACertificate" . }}
   namespace: {{ .Release.Namespace | quote }}
   labels:
-    {{- include "common.labels" . | nindent 4 }}
+    {{- include "dnsmadeeasy.labels" . | nindent 4 }}
 spec:
   secretName: {{ include "dnsmadeeasy-webhook.rootCACertificate" . }}
   duration: 43800h # 5y
@@ -40,7 +40,7 @@ metadata:
   name: {{ include "dnsmadeeasy-webhook.rootCAIssuer" . }}
   namespace: {{ .Release.Namespace | quote }}
   labels:
-    {{- include "common.labels" . | nindent 4 }}
+    {{- include "dnsmadeeasy.labels" . | nindent 4 }}
 spec:
   ca:
     secretName: {{ include "dnsmadeeasy-webhook.rootCACertificate" . }}
@@ -54,7 +54,7 @@ metadata:
   name: {{ include "dnsmadeeasy-webhook.servingCertificate" . }}
   namespace: {{ .Release.Namespace | quote }}
   labels:
-    {{- include "common.labels" . | nindent 4 }}
+    {{- include "dnsmadeeasy.labels" . | nindent 4 }}
 spec:
   secretName: {{ include "dnsmadeeasy-webhook.servingCertificate" . }}
   duration: 8760h # 1y
@@ -62,7 +62,7 @@ spec:
     name: {{ include "dnsmadeeasy-webhook.rootCAIssuer" . }}
     kind: Issuer
   dnsNames:
-  - {{ include "common.names.fullname" . }}
-  - {{ include "common.names.fullname" . }}.{{ .Release.Namespace }}
-  - {{ include "common.names.fullname" . }}.{{ .Release.Namespace }}.svc
+  - {{ include "dnsmadeeasy.fullname" . }}
+  - {{ include "dnsmadeeasy.fullname" . }}.{{ .Release.Namespace }}
+  - {{ include "dnsmadeeasy.fullname" . }}.{{ .Release.Namespace }}.svc
 {{- end }}

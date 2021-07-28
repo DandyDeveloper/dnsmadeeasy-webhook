@@ -3,7 +3,7 @@ kind: APIService
 metadata:
   name: v1alpha1.{{ .Values.groupName }}
   labels:
-    {{- include "common.labels" . | nindent 4 }}
+    {{- include "dnsmadeeasy.labels" . | nindent 4 }}
   annotations:
     certmanager.k8s.io/inject-ca-from: "{{ .Release.Namespace }}/{{ include "dnsmadeeasy-webhook.servingCertificate" . }}"
 spec:
@@ -13,6 +13,6 @@ spec:
   #TBD : avoid insecureSkipTLSVerify
   insecureSkipTLSVerify: true
   service:
-    name: {{ include "common.names.fullname" . }}
+    name: {{ include "dnsmadeeasy.fullname" . }}
     namespace: {{ .Release.Namespace }}
   version: v1alpha1

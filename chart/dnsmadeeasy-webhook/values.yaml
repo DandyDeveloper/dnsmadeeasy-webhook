@@ -29,6 +29,10 @@ image:
   # -- Image tag
   tag: v1.0.0
 
+service:
+  port: 443
+  annotations: {}
+
 # -- Generate dedicated certs instead of re-using the cert-manager
 # webhook certificate.
 generateCerts: true
