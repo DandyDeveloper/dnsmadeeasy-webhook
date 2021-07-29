@@ -19,15 +19,15 @@ spec:
         app.kubernetes.io/name: dnsmadeeasy-webhook
         app.kubernetes.io/instance: {{ include "dnsmadeeasy.name" . }}
     spec:
-      
       serviceAccountName: {{ include "dnsmadeeasy.name" . }}
       dnsPolicy: ClusterFirst
       enableServiceLinks: true
       containers:
         - name: {{ include "dnsmadeeasy.name" . }}
-          image: "harbor.eencloud.com/infrastructure/dnsmadeeasy-webhook:v1.0.0"
-          imagePullPolicy: IfNotPresent
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
+            - --client-ca-file=/tls/ca.crt
             - --tls-cert-file=/tls/tls.crt
             - --tls-private-key-file=/tls/tls.key
             - --secure-port={{ .Values.listeningPort }}
@@ -60,15 +60,15 @@ spec:
             initialDelaySeconds: 0
             periodSeconds: 10
             timeoutSeconds: 1
-          startupProbe:
-            failureThreshold: 30
-            httpGet:
-              path: /healthz
-              port: https
-              scheme: HTTPS
-            initialDelaySeconds: 0
-            periodSeconds: 5
-            timeoutSeconds: 1
+          # startupProbe:
+          #   failureThreshold: 30
+          #   httpGet:
+          #     path: /healthz
+          #     port: https
+          #     scheme: HTTPS
+          #   initialDelaySeconds: 0
+          #   periodSeconds: 5
+          #   timeoutSeconds: 1
       volumes:
         - name: certs
           secret:

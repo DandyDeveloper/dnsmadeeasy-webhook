@@ -3,13 +3,13 @@ kind: Service
 metadata:
   name: {{ include "dnsmadeeasy.name" . }}
   labels:
-{{ include "dnsmadeeasy.labels" . | nindent 4 }}
+    {{ include "dnsmadeeasy.labels" . | nindent 4 }}
   annotations:
 spec:
   type: ClusterIP
   ports:
-  - port: 443
-    targetPort: 4443
+  - port: {{ .Values.service.port }}
+    targetPort: {{ .Values.listeningPort }}
     protocol: TCP
     name: https
   selector:

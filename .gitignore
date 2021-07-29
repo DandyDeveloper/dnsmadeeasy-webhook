@@ -3,5 +3,7 @@
 bin
 _out
 apiserver.local.config/**
-chart/dnsmadeeasy-webhook/charts/**
-chart/dnsmadeeasy-webhook/tmp/**
+chart/dnsmadeeasy-webhook/charts
+chart/dnsmadeeasy-webhook/tmp
+src/vendor
+src/out

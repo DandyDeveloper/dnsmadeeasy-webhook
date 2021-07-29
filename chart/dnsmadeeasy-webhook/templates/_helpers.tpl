@@ -60,19 +60,6 @@ If release name contains chart name it will be used as a full name.
   {{- end -}}
 {{- end -}}
 
-{{/* Return the properly cased version of the controller type */}}
-{{- define "dnsmadeeasy.names.controllerType" -}}
-  {{- if eq .Values.controller.type "deployment" -}}
-    {{- print "Deployment" -}}
-  {{- else if eq .Values.controller.type "daemonset" -}}
-    {{- print "DaemonSet" -}}
-  {{- else if eq .Values.controller.type "statefulset"  -}}
-    {{- print "StatefulSet" -}}
-  {{- else -}}
-    {{- fail (printf "Not a valid controller.type (%s)" .Values.controller.type) -}}
-  {{- end -}}
-{{- end -}}
-
 {{- define "dnsmadeeasy-webhook.selfSignedIssuer" -}}
 {{ printf "%s-selfsign" (include "dnsmadeeasy.fullname" .) }}
 {{- end -}}
