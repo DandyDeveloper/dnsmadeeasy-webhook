@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: {{ include "dnsmadeeasy.name" . }}
+  name: {{ include "dnsmadeeasy.names.serviceAccountName" . }}
   labels:
     {{ include "dnsmadeeasy.labels" . | nindent 4 }}
 {{- end }}

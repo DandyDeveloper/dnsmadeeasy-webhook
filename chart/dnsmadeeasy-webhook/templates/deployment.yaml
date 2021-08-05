@@ -19,7 +19,7 @@ spec:
         app.kubernetes.io/name: dnsmadeeasy-webhook
         app.kubernetes.io/instance: {{ include "dnsmadeeasy.name" . }}
     spec:
-      serviceAccountName: {{ include "dnsmadeeasy.name" . }}
+      serviceAccountName: {{ include "dnsmadeeasy.names.serviceAccountName" . }}
       dnsPolicy: ClusterFirst
       enableServiceLinks: true
       containers:
@@ -27,10 +27,9 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
-            - --client-ca-file=/tls/ca.crt
-            - --tls-cert-file=/tls/tls.crt
-            - --tls-private-key-file=/tls/tls.key
+            - --v=6
             - --secure-port={{ .Values.listeningPort }}
+            - --cert-dir=/tls
           env:
             - name: "GROUP_NAME"
               value: {{ .Values.groupName | quote }}
@@ -41,7 +40,6 @@ spec:
           volumeMounts:
             - name: certs
               mountPath: /tls
-              readOnly: true
           livenessProbe:
             failureThreshold: 3
             httpGet:
@@ -71,5 +69,4 @@ spec:
           #   timeoutSeconds: 1
       volumes:
         - name: certs
-          secret:
-            secretName: {{ include "dnsmadeeasy.name" . }}-webhook-tls
+          emptyDir: {}
